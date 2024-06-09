@@ -1,34 +1,45 @@
+import { useEffect, useState } from "react";
 import { SearchInput } from "../input/Input";
 import ThemeController from "../theme-controller/ThemeController";
 import { NavMenuItems, NavMenuType } from "./NavMenuData";
+import DrawerIcon from "../../assets/icons/DrawerIcon";
+import { StyledContainer } from "../../style/Style";
 
 const Navbar = () => {
+  const [sticky, setSticky] = useState<boolean>(false);
   const navItems: JSX.Element[] = NavMenuItems?.map((menu: NavMenuType) => (
     <li key={menu?.id}>
       <a>{menu?.label}</a>
     </li>
   ));
 
+  useEffect(() => {
+    const handlePageScroll = () => {
+      if (window.scrollY > 0) {
+        //for vertically scroll detection
+        setSticky(true);
+      } else {
+        setSticky(false);
+      }
+    };
+    window.addEventListener("scroll", handlePageScroll);
+    return () => {
+      window.removeEventListener("scroll", handlePageScroll);
+    };
+  }, []);
+
   return (
-    <div className="max-w-screen-2xl container mx-auto px-4 md:px-20">
-      <div className="navbar bg-base-100">
+    <StyledContainer
+      className={` fixed left-0 right-0 top-0 ${
+        sticky &&
+        "bg-base-100 shadow-md duration-200 ease-in-out transition-all"
+      }`}
+    >
+      <div className="navbar">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />
-              </svg>
+              <DrawerIcon className="h-5 w-5" />
             </div>
             <ul
               tabIndex={0}
@@ -52,7 +63,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-    </div>
+    </StyledContainer>
   );
 };
 
