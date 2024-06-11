@@ -30,9 +30,9 @@ const Navbar = () => {
 
   return (
     <StyledContainer
-      className={` fixed left-0 right-0 top-0 ${
+      className={` fixed left-0 right-0 top-0 z-50 ${
         sticky &&
-        "bg-base-100 shadow-md duration-200 ease-in-out transition-all"
+        "bg-base-100 shadow-md duration-200 ease-in-out transition-all "
       }`}
     >
       <div className="navbar">

@@ -5,8 +5,9 @@ export const StyledContainer = styled.div`
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1rem; /* 16px */
-  padding-right: 1rem; /* 16px */
+  // margin-tog: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 
   @media (min-width: 768px) {
     padding-left: 5rem; /* 80px */
