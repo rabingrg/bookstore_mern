@@ -5,7 +5,7 @@ import { StyledContainer } from "../style/Style";
 const Banner = () => {
   return (
     <>
-      <StyledContainer className="flex flex-col md:flex-row gap-10 mt-20 md:mt-10 md:gap-0">
+      <StyledContainer className="flex flex-col md:flex-row ">
         <div className="w-full md:w-1/2 mt-8 md:mt-20 order-2 md:order-1">
           <div className="space-y-8 px-6">
             <h1 className="text-4xl font-bold ">

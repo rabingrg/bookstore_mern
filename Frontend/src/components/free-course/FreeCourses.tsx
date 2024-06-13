@@ -1,4 +1,4 @@
-import { Course, CourseList } from "../../dummy-data/Courses";
+import { Course, CourseList } from "../../dummy-data/CourseData";
 import { StyledContainer } from "../../style/Style";
 import SliderComponent from "../SliderComponent";
 

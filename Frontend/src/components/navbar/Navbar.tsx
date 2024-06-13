@@ -4,12 +4,13 @@ import ThemeController from "../theme-controller/ThemeController";
 import { NavMenuItems, NavMenuType } from "./NavMenuData";
 import DrawerIcon from "../../assets/icons/DrawerIcon";
 import { StyledContainer } from "../../style/Style";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [sticky, setSticky] = useState<boolean>(false);
   const navItems: JSX.Element[] = NavMenuItems?.map((menu: NavMenuType) => (
     <li key={menu?.id}>
-      <a>{menu?.label}</a>
+      <Link to={menu?.route}>{menu?.label}</Link>
     </li>
   ));
 
@@ -36,7 +37,7 @@ const Navbar = () => {
       }`}
     >
       <div className="navbar">
-        <div className="navbar-start">
+        <div className="navbar-start px-5">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <DrawerIcon className="h-5 w-5" />
@@ -48,7 +49,7 @@ const Navbar = () => {
               {navItems}
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">Bookstore</a>
+          <a className=" text-xl">Bookstore</a>
         </div>
         <div className="navbar-end space-x-3">
           <div className="navbar-center hidden lg:flex">

@@ -1,4 +1,4 @@
-import { Course } from "../dummy-data/Courses";
+import { Course } from "../dummy-data/CourseData";
 
 const Cards = ({ data }: { data: Course }) => {
   const { name, title, price, image } = data;
@@ -16,7 +16,7 @@ const Cards = ({ data }: { data: Course }) => {
           <p>{name}</p>
           <div className="card-actions justify-between items-center">
             <div className="badge badge-outline">$ {price}</div>
-            <div className="px-2 py-0.5 rounded-xl cursor-pointer border-[1px] border-slate-800 hover:bg-pink-500 hover:border-pink-500 hover:text-white">
+            <div className="px-2 py-0.5 rounded-xl cursor-pointer border-[1px] border-slate-800 hover:bg-pink-500 hover:border-pink-500 hover:text-white duration-200 ease-in-out">
               Buy Now
             </div>
           </div>

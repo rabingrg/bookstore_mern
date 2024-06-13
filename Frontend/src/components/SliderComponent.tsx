@@ -1,7 +1,7 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import { Course } from "../dummy-data/Courses";
+import { Course } from "../dummy-data/CourseData";
 import Cards from "./Cards";
 
 const SliderComponent = ({ data }: { data?: Course[] }) => {

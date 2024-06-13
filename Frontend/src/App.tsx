@@ -1,16 +1,6 @@
-import Banner from "./components/Banner";
-import Footer from "./components/Footer";
-import FreeCourses from "./components/free-course/FreeCourses";
-import Navbar from "./components/navbar/Navbar";
-
+import AppRouter from "./app/AppRouter";
 const App = () => {
-  return (
-    <>
-      <div className="max-w-screen-2xl ">
-        <Navbar /> <Banner /> <FreeCourses /> <Footer />
-      </div>
-    </>
-  );
+  return <AppRouter />;
 };
 
 export default App;
