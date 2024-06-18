@@ -2,6 +2,8 @@ const express = require("express");
 const dotenv = require("dotenv");
 const app = express();
 const mongoose = require("mongoose");
+const bookRoute = require("./route/book.route");
+
 dotenv.config();
 
 const PORT = process.env.PORT || 4002;
@@ -13,6 +15,7 @@ try {
 } catch (error) {
   console.log(error);
 }
+app.use("/book", bookRoute);
 
 app.listen(PORT, () => {
   console.log(`Serving listening on port ${PORT}`);
