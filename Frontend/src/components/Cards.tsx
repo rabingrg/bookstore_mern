@@ -1,7 +1,9 @@
-import { Course } from "../dummy-data/CourseData";
+import { Course } from "../dummy-data/CoursesData";
 
 const Cards = ({ data }: { data: Course }) => {
   const { name, title, price, image } = data;
+  console.log("cors", data);
+
   return (
     <>
       <div className="card w-92 bg-base-100 shadow-xl my-4">

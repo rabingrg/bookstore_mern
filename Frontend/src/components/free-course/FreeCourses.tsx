@@ -1,11 +1,26 @@
-import { Course, CourseList } from "../../dummy-data/CourseData";
+import { useEffect, useState } from "react";
+import { Course } from "../../dummy-data/CoursesData";
 import { StyledContainer } from "../../style/Style";
 import SliderComponent from "../SliderComponent";
+import { request } from "../../api/request";
+// import CONFIG from "../../config/config";
 
 const FreeCourses = () => {
-  const freeCourses = CourseList?.filter(
-    (course: Course) => course?.price == 0
-  );
+  const [books, setBooks] = useState<Course[]>([]);
+  const freeCourses = books?.filter((course: Course) => course?.price === 0);
+
+  useEffect(() => {
+    const getBookData = async () => {
+      try {
+        const res = await request.book.getBooks();
+        const bookData = await res.data;
+        setBooks(bookData);
+      } catch (error) {
+        console.log("Error in fetching books: ", error);
+      }
+    };
+    getBookData();
+  }, []);
 
   return (
     <>
