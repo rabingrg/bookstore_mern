@@ -8,11 +8,11 @@ const addBook = async (req, res) => {
       return res.status(400).json({ message: "Book already exist." });
     }
     const newBook = new Book({
-      name,
-      title,
-      price,
-      category,
-      image,
+      name: name,
+      title: title,
+      price: price,
+      category: category,
+      image: image,
     });
     await newBook.save();
     return res.status(201).json({ message: "Book successfully added." });
