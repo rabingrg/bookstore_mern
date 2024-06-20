@@ -1,9 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import bookRoute from "./route/book.route.js";
-import signupRoute from "./route/user.route.js";
+import bookRoute from "./route/getBooks.route.js";
+import signupRoute from "./route/addUser.route.js";
 import addBookRoute from "./route/addbook.route.js";
+import getUserRoute from "./route/getUsers.route.js";
 import cors from "cors";
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(express.json()); //to parse the request body data from client
 app.use("/book", bookRoute);
 app.use("/user", signupRoute);
 app.use("/book", addBookRoute);
+app.use("/user", getUserRoute);
 
 dotenv.config();
 
