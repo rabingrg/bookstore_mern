@@ -5,6 +5,7 @@ import bookRoute from "./route/getBooks.route.js";
 import signupRoute from "./route/addUser.route.js";
 import addBookRoute from "./route/addbook.route.js";
 import getUserRoute from "./route/getUsers.route.js";
+import loginRoute from "./route/login.route.js";
 import cors from "cors";
 
 const app = express();
@@ -17,6 +18,7 @@ app.use("/book", bookRoute);
 app.use("/user", signupRoute);
 app.use("/book", addBookRoute);
 app.use("/user", getUserRoute);
+app.use("/login", loginRoute);
 
 dotenv.config();
 
