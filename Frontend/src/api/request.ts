@@ -17,7 +17,7 @@ interface BookResponseInterface {
 
 const book = {
   getBooks: (): Promise<BookResponseInterface> => {
-    return axios.get("http://localhost:4001/book");
+    return axios.get("http://localhost:4001/book/getBooks");
   },
 };
 

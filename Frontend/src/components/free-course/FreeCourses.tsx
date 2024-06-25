@@ -1,20 +1,24 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { Course } from "../../dummy-data/CoursesData";
 import { StyledContainer } from "../../style/Style";
 import SliderComponent from "../SliderComponent";
 import { request } from "../../api/request";
+import { BookContext } from "../../context/BookContext";
 // import CONFIG from "../../config/config";
 
 const FreeCourses = () => {
-  const [books, setBooks] = useState<Course[]>([]);
-  const freeCourses = books?.filter((course: Course) => course?.price === 0);
+  const { allBookData, handleSetAllBookData } = useContext(BookContext);
+  const freeCourses = allBookData?.filter(
+    (course: Course) => course?.price === 0
+  );
+  console.log(freeCourses);
 
   useEffect(() => {
     const getBookData = async () => {
       try {
         const res = await request.book.getBooks();
         const bookData = await res.data;
-        setBooks(bookData);
+        handleSetAllBookData(bookData);
       } catch (error) {
         console.log("Error in fetching books: ", error);
       }
