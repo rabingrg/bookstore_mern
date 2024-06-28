@@ -5,6 +5,7 @@ import { NavMenuItems, NavMenuType } from "./NavMenuData";
 import DrawerIcon from "../../assets/icons/DrawerIcon";
 import { StyledContainer } from "../../style/Style";
 import { Link } from "react-router-dom";
+import Login from "../modal/LoginRegisterModal";
 
 const Navbar = () => {
   const [sticky, setSticky] = useState<boolean>(false);
@@ -22,6 +23,10 @@ const Navbar = () => {
       </Link>
     </li>
   ));
+
+  const handleModalOpen = (): void => {
+    document?.getElementById("login_modal")?.showModal();
+  };
 
   useEffect(() => {
     if (theme === "dark") {
@@ -51,41 +56,51 @@ const Navbar = () => {
   }, []);
 
   return (
-    <StyledContainer
-      className={` fixed left-0 right-0 top-0 z-50  ${
-        sticky &&
-        "bg-base-100 shadow-md duration-200 ease-in-out transition-all dark:bg-slate-800"
-      }`}
-    >
-      <div className="navbar">
-        <div className="navbar-start px-5">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <DrawerIcon className="h-5 w-5" />
+    <>
+      <StyledContainer
+        className={` fixed left-0 right-0 top-0 z-50  ${
+          sticky &&
+          "bg-base-100 shadow-md duration-200 ease-in-out transition-all dark:bg-slate-800"
+        }`}
+      >
+        <div className="navbar">
+          <div className="navbar-start px-5">
+            <div className="dropdown">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost lg:hidden"
+              >
+                <DrawerIcon className="h-5 w-5" />
+              </div>
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+              >
+                {navItems}
+              </ul>
             </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-            >
-              {navItems}
-            </ul>
+            <a className=" text-xl">Bookstore</a>
           </div>
-          <a className=" text-xl">Bookstore</a>
-        </div>
-        <div className="navbar-end space-x-3">
-          <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal px-1">{navItems}</ul>
-          </div>
-          <SearchInput />
-          <ThemeController theme={theme} setTheme={setTheme} />
-          <div className="">
-            <a className="bg-black text-white px-4 py-3 rounded-md hover:bg-slate-500 cursor-pointer duration-300">
-              Login
-            </a>
+          <div className="navbar-end space-x-3">
+            <div className="navbar-center hidden lg:flex">
+              <ul className="menu menu-horizontal px-1">{navItems}</ul>
+            </div>
+            <SearchInput />
+            <ThemeController theme={theme} setTheme={setTheme} />
+            <div className="">
+              <a
+                className="bg-black text-white px-4 py-3 rounded-md hover:bg-slate-500 cursor-pointer duration-300"
+                onClick={handleModalOpen}
+              >
+                Login
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-    </StyledContainer>
+      </StyledContainer>
+      <Login />
+    </>
   );
 };
 
