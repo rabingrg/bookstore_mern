@@ -19,16 +19,16 @@ const LoginRegisterModal = () => {
         <div className="modal-box">
           <form method="dialog">
             <button
-              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 dark:text-black"
+              className="btn btn-sm btn-circle btn-ghost outline-none absolute right-2 top-2 dark:text-black"
               onClick={handleModalClose}
             >
               ✕
             </button>
           </form>
           {isRegister ? (
-            <Login handleTabChange={handleTabChange} />
-          ) : (
             <Register handleTabChange={handleTabChange} />
+          ) : (
+            <Login handleTabChange={handleTabChange} />
           )}
         </div>
       </dialog>
