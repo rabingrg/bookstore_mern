@@ -4,14 +4,12 @@ import { StyledContainer } from "../../style/Style";
 import SliderComponent from "../SliderComponent";
 import { request } from "../../api/request";
 import { BookContext } from "../../context/BookContext";
-// import CONFIG from "../../config/config";
 
 const FreeCourses = () => {
   const { allBookData, handleSetAllBookData } = useContext(BookContext);
   const freeCourses = allBookData?.filter(
     (course: Course) => course?.price === 0
   );
-  console.log(freeCourses);
 
   useEffect(() => {
     const getBookData = async () => {

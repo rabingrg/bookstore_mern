@@ -1,6 +1,10 @@
 import AppRouter from "./app/AppRouter";
 const App = () => {
-  return <AppRouter />;
+  return (
+    <div className="dark:bg-slate-900 dark:text-white">
+      <AppRouter />
+    </div>
+  );
 };
 
 export default App;

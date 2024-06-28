@@ -8,11 +8,32 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [sticky, setSticky] = useState<boolean>(false);
+  const [theme, setTheme] = useState<string | null>(
+    localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
+  );
+
+  const element = document.documentElement;
+  const body = document.body;
+
   const navItems: JSX.Element[] = NavMenuItems?.map((menu: NavMenuType) => (
     <li key={menu?.id}>
-      <Link to={menu?.route}>{menu?.label}</Link>
+      <Link className="dark:text-white" to={menu?.route}>
+        {menu?.label}
+      </Link>
     </li>
   ));
+
+  useEffect(() => {
+    if (theme === "dark") {
+      element.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+      body.classList.add("dark");
+    } else {
+      element.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+      body.classList.remove("dark");
+    }
+  }, [theme]);
 
   useEffect(() => {
     const handlePageScroll = () => {
@@ -31,9 +52,9 @@ const Navbar = () => {
 
   return (
     <StyledContainer
-      className={` fixed left-0 right-0 top-0 z-50 ${
+      className={` fixed left-0 right-0 top-0 z-50  ${
         sticky &&
-        "bg-base-100 shadow-md duration-200 ease-in-out transition-all "
+        "bg-base-100 shadow-md duration-200 ease-in-out transition-all"
       }`}
     >
       <div className="navbar">
@@ -56,7 +77,7 @@ const Navbar = () => {
             <ul className="menu menu-horizontal px-1">{navItems}</ul>
           </div>
           <SearchInput />
-          <ThemeController />
+          <ThemeController theme={theme} setTheme={setTheme} />
           <div className="">
             <a className="bg-black text-white px-4 py-3 rounded-md hover:bg-slate-500 cursor-pointer duration-300">
               Login

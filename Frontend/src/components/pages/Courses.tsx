@@ -5,7 +5,6 @@ import { Course } from "../../dummy-data/CoursesData";
 
 const Courses = () => {
   const { allBookData } = useContext(BookContext);
-  console.log("allBookData", allBookData);
 
   return (
     <>
@@ -22,7 +21,7 @@ const Courses = () => {
             pariatur inventore excepturi.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-6 md:p-0">
           {allBookData?.map((book: Course) => (
             <Cards key={book?.id} data={book} />
           ))}
