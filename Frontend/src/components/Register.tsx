@@ -16,7 +16,6 @@ const Register = ({ handleTabChange }: { handleTabChange: () => void }) => {
   } = useForm<RegisterFields>();
 
   const onSubmit: SubmitHandler<RegisterFields> = async (data) => {
-    console.log(data);
     const signupData: RegisterFields = {
       fullName: data?.fullName,
       emailId: data?.emailId,
@@ -32,7 +31,9 @@ const Register = ({ handleTabChange }: { handleTabChange: () => void }) => {
         alert("Error registering user");
       }
     } catch (error) {
-      alert(`Error: ${error}`);
+      if (error?.response) {
+        alert(error?.response?.data?.message);
+      }
     }
   };
 

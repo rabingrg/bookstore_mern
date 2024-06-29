@@ -1,31 +1,49 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { SearchInput } from "../input/Input";
 import ThemeController from "../theme-controller/ThemeController";
 import { NavMenuItems, NavMenuType } from "./NavMenuData";
 import DrawerIcon from "../../assets/icons/DrawerIcon";
 import { StyledContainer } from "../../style/Style";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Login from "../modal/LoginRegisterModal";
+import { AuthContext } from "../../context/AuthContext";
 
 const Navbar = () => {
+  const { authUser } = useContext(AuthContext);
   const [sticky, setSticky] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const element = document.documentElement;
+  const body = document.body;
   const [theme, setTheme] = useState<string | null>(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
   );
 
-  const element = document.documentElement;
-  const body = document.body;
+  const handleProtectedRoute = (menu: NavMenuType) => {
+    if (!authUser && menu?.id === 2) {
+      document?.getElementById("login_modal")?.showModal();
+    } else {
+      navigate(menu.route);
+    }
+  };
 
   const navItems: JSX.Element[] = NavMenuItems?.map((menu: NavMenuType) => (
     <li key={menu?.id}>
-      <Link className="dark:text-white" to={menu?.route}>
+      <a
+        className="dark:text-white cursor-pointer"
+        onClick={() => handleProtectedRoute(menu)}
+      >
         {menu?.label}
-      </Link>
+      </a>
     </li>
   ));
 
   const handleModalOpen = (): void => {
     document?.getElementById("login_modal")?.showModal();
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -88,13 +106,23 @@ const Navbar = () => {
             </div>
             <SearchInput />
             <ThemeController theme={theme} setTheme={setTheme} />
+            {authUser && <p>{authUser?.fullName?.split(" ")?.[0]}</p>}
             <div className="">
-              <a
-                className="bg-black text-white px-4 py-3 rounded-md hover:bg-slate-500 cursor-pointer duration-300"
-                onClick={handleModalOpen}
-              >
-                Login
-              </a>
+              {authUser ? (
+                <a
+                  className="bg-[#f000b7] text-white px-4 py-3 rounded-md cursor-pointer duration-300"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </a>
+              ) : (
+                <a
+                  className="bg-black text-white px-4 py-3 rounded-md hover:bg-slate-500 cursor-pointer duration-300"
+                  onClick={handleModalOpen}
+                >
+                  Login
+                </a>
+              )}
             </div>
           </div>
         </div>

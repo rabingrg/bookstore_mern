@@ -23,12 +23,18 @@ const Login = ({ handleTabChange }: { handleTabChange: () => void }) => {
       const res = await request.user.login(loginData);
       if (res?.data) {
         alert("Successfully logged in!");
-        reset();
+        localStorage.setItem("user", JSON.stringify(res?.data?.user));
+        window.location.reload();
+        setTimeout(() => {
+          document?.getElementById("login_modal")?.close();
+          reset();
+        }, 600);
       }
     } catch (error) {
-      alert("Login Failed!");
+      alert(error.response.data.message);
     }
   };
+
   return (
     <>
       {" "}
