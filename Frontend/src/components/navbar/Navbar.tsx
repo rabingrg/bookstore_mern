@@ -9,7 +9,7 @@ import Login from "../modal/LoginRegisterModal";
 import { AuthContext } from "../../context/AuthContext";
 
 const Navbar = () => {
-  const { authUser } = useContext(AuthContext);
+  const { authUser, handleAuthUser } = useContext(AuthContext);
   const [sticky, setSticky] = useState<boolean>(false);
   const navigate = useNavigate();
   const element = document.documentElement;
@@ -43,7 +43,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("user");
-    window.location.reload();
+    handleAuthUser("");
   };
 
   useEffect(() => {

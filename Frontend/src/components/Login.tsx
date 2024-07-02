@@ -1,5 +1,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { request } from "../api/request";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 export interface LoginFields {
   emailId: string;
@@ -13,6 +15,7 @@ const Login = ({ handleTabChange }: { handleTabChange: () => void }) => {
     reset,
     formState: { errors },
   } = useForm<LoginFields>();
+  const { handleAuthUser } = useContext(AuthContext);
 
   const onSubmit: SubmitHandler<LoginFields> = async (data) => {
     const loginData: LoginFields = {
@@ -24,14 +27,14 @@ const Login = ({ handleTabChange }: { handleTabChange: () => void }) => {
       if (res?.data) {
         alert("Successfully logged in!");
         localStorage.setItem("user", JSON.stringify(res?.data?.user));
-        window.location.reload();
+        handleAuthUser(res?.data?.user);
         setTimeout(() => {
           document?.getElementById("login_modal")?.close();
           reset();
         }, 600);
       }
     } catch (error) {
-      alert(error.response.data.message);
+      alert(error?.response?.data?.message);
     }
   };
 

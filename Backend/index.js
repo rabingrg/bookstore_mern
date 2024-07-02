@@ -6,9 +6,18 @@ import signupRoute from "./route/addUser.route.js";
 import addBookRoute from "./route/addbook.route.js";
 import getUserRoute from "./route/getUsers.route.js";
 import loginRoute from "./route/login.route.js";
+import logoutRoute from "./route/logout.route.js";
 import cors from "cors";
+import session from "express-session";
 
 const app = express();
+// app.use(
+//   session({
+//     secret: "rabinbook_store",
+//     resave: false,
+//     saveUninitialized: true,
+//   })
+// );
 
 app.use(cors()); //to fix cors issue //pnpm i cors
 app.use(express.json()); //to parse the request body data from client
@@ -19,6 +28,7 @@ app.use("/user", signupRoute);
 app.use("/book", addBookRoute);
 app.use("/user", getUserRoute);
 app.use("/login", loginRoute);
+app.use("/logout", logoutRoute);
 
 dotenv.config();
 
