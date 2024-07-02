@@ -4,13 +4,20 @@ import Register from "../Register";
 
 const LoginRegisterModal = () => {
   const [isRegister, setIsRegister] = useState<boolean>(false);
+  const [resetForm, setResetForm] = useState<boolean>(false);
 
   const handleModalClose = () => {
     setIsRegister(false);
+    setResetForm(true);
   };
 
   const handleTabChange = () => {
     setIsRegister(!isRegister);
+  };
+
+  const handleResetForm = (reset: () => void) => {
+    reset();
+    setResetForm(false);
   };
 
   return (
@@ -26,9 +33,16 @@ const LoginRegisterModal = () => {
             </button>
           </form>
           {isRegister ? (
-            <Register handleTabChange={handleTabChange} />
+            <Register
+              handleTabChange={handleTabChange}
+              handleModalClose={handleModalClose}
+            />
           ) : (
-            <Login handleTabChange={handleTabChange} />
+            <Login
+              handleTabChange={handleTabChange}
+              handleResetForm={handleResetForm}
+              resetForm={resetForm}
+            />
           )}
         </div>
       </dialog>

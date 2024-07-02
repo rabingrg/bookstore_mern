@@ -11,7 +11,7 @@ export const logIn = async (req, res) => {
       existingUser.password
     );
     if (!existingUser || !checkPassword) {
-      return res.status(400).json({ message: "Invalid emailId or password." });
+      return res.status(400).json({ message: "Invalid email Id or password." });
     } else {
       // req.session.user = emailId;
       return res.status(200).json({

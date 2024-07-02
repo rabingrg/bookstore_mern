@@ -1,14 +1,25 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { request } from "../api/request";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { HOME } from "../config/path";
 
 export interface LoginFields {
   emailId: string;
   password: string;
 }
 
-const Login = ({ handleTabChange }: { handleTabChange: () => void }) => {
+const Login = ({
+  handleTabChange,
+  handleResetForm,
+  resetForm,
+}: {
+  handleTabChange: () => void;
+  handleResetForm: (reset: () => void) => void;
+  resetForm: boolean;
+}) => {
   const {
     register,
     handleSubmit,
@@ -16,6 +27,7 @@ const Login = ({ handleTabChange }: { handleTabChange: () => void }) => {
     formState: { errors },
   } = useForm<LoginFields>();
   const { handleAuthUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<LoginFields> = async (data) => {
     const loginData: LoginFields = {
@@ -25,18 +37,24 @@ const Login = ({ handleTabChange }: { handleTabChange: () => void }) => {
     try {
       const res = await request.user.login(loginData);
       if (res?.data) {
-        alert("Successfully logged in!");
+        toast.success("Successfully logged in!");
         localStorage.setItem("user", JSON.stringify(res?.data?.user));
         handleAuthUser(res?.data?.user);
-        setTimeout(() => {
-          document?.getElementById("login_modal")?.close();
-          reset();
-        }, 600);
+        document?.getElementById("login_modal")?.close();
+        reset();
+        navigate(`${HOME}`);
       }
     } catch (error) {
-      alert(error?.response?.data?.message);
+      toast.error(error?.response?.data?.message);
     }
   };
+
+  useEffect(() => {
+    if (resetForm) {
+      handleResetForm(reset);
+      reset();
+    }
+  }, [reset, resetForm, handleResetForm]);
 
   return (
     <>

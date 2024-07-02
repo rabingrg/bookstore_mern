@@ -17,7 +17,16 @@ export const signupUser = async (req, res) => {
       phoneNumber: phoneNumber,
     });
     await createUser.save();
-    return res.status(201).json({ message: "Sign up successfull." }); //return the response status to fix errors on multiple request
+    return res
+      .status(201)
+      .json({
+        user: {
+          id: createUser._id,
+          emailId: createUser.emailId,
+          fullName: createUser.fullName,
+        },
+        message: "Sign up successfull.",
+      }); //return the response status to fix errors on multiple request
   } catch (error) {
     console.log("Error on signing up user: ", error.message);
     return res.status(500).json({ message: "Internal Server Error." }); //return

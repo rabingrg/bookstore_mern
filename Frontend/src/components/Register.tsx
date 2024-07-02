@@ -1,5 +1,10 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { request } from "../api/request";
+import toast from "react-hot-toast";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { HOME } from "../config/path";
 export interface RegisterFields {
   fullName: string;
   emailId: string;
@@ -7,13 +12,21 @@ export interface RegisterFields {
   phoneNumber: number;
 }
 
-const Register = ({ handleTabChange }: { handleTabChange: () => void }) => {
+const Register = ({
+  handleTabChange,
+  handleModalClose,
+}: {
+  handleTabChange: () => void;
+  handleModalClose: () => void;
+}) => {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm<RegisterFields>();
+  const { handleAuthUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<RegisterFields> = async (data) => {
     const signupData: RegisterFields = {
@@ -25,14 +38,19 @@ const Register = ({ handleTabChange }: { handleTabChange: () => void }) => {
     try {
       const res = await request.user.signup(signupData);
       if (res?.data) {
-        alert("Registration Successful");
+        localStorage.setItem("user", JSON.stringify(res?.data?.user));
+        handleAuthUser(res?.data?.user);
+        toast.success("Registration Successful");
         reset();
+        document?.getElementById("login_modal")?.close();
+        navigate(`${HOME}`);
+        handleModalClose();
       } else {
-        alert("Error registering user");
+        toast.error("Error registering user");
       }
     } catch (error) {
       if (error?.response) {
-        alert(error?.response?.data?.message);
+        toast.error(error?.response?.data?.message);
       }
     }
   };

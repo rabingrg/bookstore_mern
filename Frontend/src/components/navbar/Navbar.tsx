@@ -4,14 +4,17 @@ import ThemeController from "../theme-controller/ThemeController";
 import { NavMenuItems, NavMenuType } from "./NavMenuData";
 import DrawerIcon from "../../assets/icons/DrawerIcon";
 import { StyledContainer } from "../../style/Style";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Login from "../modal/LoginRegisterModal";
 import { AuthContext } from "../../context/AuthContext";
+import toast from "react-hot-toast";
+import { APP, COURSE, HOME } from "../../config/path";
 
 const Navbar = () => {
   const { authUser, handleAuthUser } = useContext(AuthContext);
   const [sticky, setSticky] = useState<boolean>(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const element = document.documentElement;
   const body = document.body;
   const [theme, setTheme] = useState<string | null>(
@@ -44,6 +47,10 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("user");
     handleAuthUser("");
+    toast.success("Logout Successful!");
+    if (location.pathname === `/${APP}/${COURSE}`) {
+      navigate(`${HOME}`);
+    }
   };
 
   useEffect(() => {
