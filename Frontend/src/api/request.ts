@@ -2,6 +2,7 @@ import axios from "axios";
 import { Course } from "../dummy-data/CoursesData";
 import { RegisterFields } from "../components/Register";
 import { LoginFields } from "../components/Login";
+import { CONFIG } from "../config/config";
 // import CONFIG from "../config/config";
 
 export interface BookInterface {
@@ -19,16 +20,16 @@ interface BookResponseInterface {
 
 const user = {
   signup: (body: RegisterFields) => {
-    return axios.post("http://localhost:4001/user/signup", body);
+    return axios.post(`${CONFIG.BASE_URI}user/signup`, body);
   },
   login: (body: LoginFields) => {
-    return axios.post("http://localhost:4001/login/", body);
+    return axios.post(`${CONFIG.BASE_URI}login/`, body);
   },
 };
 
 const book = {
   getBooks: (): Promise<BookResponseInterface> => {
-    return axios.get("http://localhost:4001/book/getBooks");
+    return axios.get(`${CONFIG.BASE_URI}book/getBooks`);
   },
 };
 
