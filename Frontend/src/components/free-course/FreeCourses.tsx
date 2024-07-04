@@ -4,6 +4,7 @@ import { StyledContainer } from "../../style/Style";
 import SliderComponent from "../SliderComponent";
 import { request } from "../../api/request";
 import { BookContext } from "../../context/BookContext";
+import toast from "react-hot-toast";
 
 const FreeCourses = () => {
   const { allBookData, handleSetAllBookData } = useContext(BookContext);
@@ -18,7 +19,9 @@ const FreeCourses = () => {
         const bookData = await res.data;
         handleSetAllBookData(bookData);
       } catch (error) {
-        console.log("Error in fetching books: ", error);
+        if(error){
+          toast.error('Error in fetching books:',error)
+        } 
       }
     };
     getBookData();
