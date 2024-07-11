@@ -9,6 +9,7 @@ import loginRoute from "./route/login.route.js";
 import logoutRoute from "./route/logout.route.js";
 import cors from "cors";
 import session from "express-session";
+import path from "path";
 
 const app = express();
 // app.use(
@@ -42,6 +43,13 @@ try {
   console.log(error);
 }
 
+if (process.env.NODE_ENV === "production") {
+  const dirPath = path.resolve();
+  app.use(express.static("Frontend/dist"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(dirPath, "Frontend", "dist", "index.html"));
+  });
+}
 app.listen(PORT, () => {
   console.log(`Serving listening on port ${PORT}`);
 });
