@@ -1,10 +1,11 @@
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { request } from "../api/request";
 import toast from "react-hot-toast";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { HOME } from "../config/path";
+import { ErrorResponse } from "./Login";
 export interface RegisterFields {
   fullName: string;
   emailId: string;
@@ -27,8 +28,9 @@ const Register = ({
   } = useForm<RegisterFields>();
   const { handleAuthUser } = useContext(AuthContext);
   const navigate = useNavigate();
+  const dialog = document?.getElementById("login_modal") as HTMLDialogElement;
 
-  const onSubmit: SubmitHandler<RegisterFields> = async (data) => {
+  const onSubmit = async (data: RegisterFields) => {
     const signupData: RegisterFields = {
       fullName: data?.fullName,
       emailId: data?.emailId,
@@ -42,15 +44,17 @@ const Register = ({
         handleAuthUser(res?.data?.user);
         toast.success("Registration Successful");
         reset();
-        document?.getElementById("login_modal")?.close();
         navigate(`${HOME}`);
+        dialog?.close();
         handleModalClose();
       } else {
         toast.error("Error registering user");
       }
     } catch (error) {
-      if (error?.response) {
-        toast.error(error?.response?.data?.message);
+      const err = error as ErrorResponse;
+
+      if (err?.response) {
+        toast.error(err?.response?.data?.message || "Error occured");
       }
     }
   };

@@ -20,10 +20,11 @@ const Navbar = () => {
   const [theme, setTheme] = useState<string | null>(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
   );
+  const dialog = document.getElementById("login_modal") as HTMLDialogElement;
 
   const handleProtectedRoute = (menu: NavMenuType) => {
     if (!authUser && menu?.id === 2) {
-      document?.getElementById("login_modal")?.showModal();
+      dialog?.showModal();
     } else {
       navigate(menu.route);
     }
@@ -41,7 +42,7 @@ const Navbar = () => {
   ));
 
   const handleModalOpen = (): void => {
-    document?.getElementById("login_modal")?.showModal();
+    dialog?.showModal();
   };
 
   const handleLogout = () => {
@@ -113,7 +114,7 @@ const Navbar = () => {
             </div>
             <SearchInput />
             <ThemeController theme={theme} setTheme={setTheme} />
-            {authUser && <p>{authUser?.fullName?.split(" ")?.[0]}</p>}
+            {authUser && <p>{authUser?.split(" ")?.[0]}</p>}
             <div className="">
               {authUser ? (
                 <a

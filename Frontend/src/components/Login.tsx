@@ -1,14 +1,22 @@
-import { SubmitHandler, useForm } from "react-hook-form";
 import { request } from "../api/request";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { HOME } from "../config/path";
+import { useForm } from "react-hook-form";
 
 export interface LoginFields {
   emailId: string;
   password: string;
+}
+
+export interface ErrorResponse {
+  response?: {
+    data?: {
+      message?: string;
+    };
+  };
 }
 
 const Login = ({
@@ -29,7 +37,7 @@ const Login = ({
   const { handleAuthUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<LoginFields> = async (data) => {
+  const onSubmit = async (data: LoginFields) => {
     const loginData: LoginFields = {
       emailId: data?.emailId,
       password: data?.password,
@@ -40,12 +48,17 @@ const Login = ({
         toast.success("Successfully logged in!");
         localStorage.setItem("user", JSON.stringify(res?.data?.user));
         handleAuthUser(res?.data?.user);
-        document?.getElementById("login_modal")?.close();
+        const dialog = document.getElementById(
+          "login_modal"
+        ) as HTMLDialogElement;
+
+        dialog?.close();
         reset();
         navigate(`${HOME}`);
       }
     } catch (error) {
-      toast.error(error?.response?.data?.message);
+      const err = error as ErrorResponse;
+      toast.error(err?.response?.data?.message || "Error occured");
     }
   };
 
