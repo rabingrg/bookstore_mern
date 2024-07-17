@@ -9,7 +9,7 @@
     "start": "nodemon index.js",
     "frontend-install": "pnpm install --prefix ../Frontend",
     "frontend-build": "pnpm build --prefix ../Frontend",
-    "build": "pnpm run frontend-install && pnpm run frontend-build && pnpm install"
+    "build": "pnpm run frontend-install && pnpm run frontend-build"
   },
   "keywords": [],
   "author": "",
