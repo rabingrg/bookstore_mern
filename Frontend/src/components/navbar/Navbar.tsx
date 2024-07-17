@@ -23,7 +23,7 @@ const Navbar = () => {
   const dialog = document.getElementById("login_modal") as HTMLDialogElement;
 
   const handleProtectedRoute = (menu: NavMenuType) => {
-    if (!authUser && menu?.id === 2) {
+    if (!authUser?.id && menu?.id === 2) {
       dialog?.showModal();
     } else {
       navigate(menu.route);
@@ -47,7 +47,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("user");
-    handleAuthUser("");
+    handleAuthUser({ id: "", emailId: "", fullName: "" });
     toast.success("Logout Successful!");
     if (location.pathname === `/${APP}/${COURSE}`) {
       navigate(`${HOME}`);
@@ -114,9 +114,9 @@ const Navbar = () => {
             </div>
             <SearchInput />
             <ThemeController theme={theme} setTheme={setTheme} />
-            {authUser && <p>{authUser?.split(" ")?.[0]}</p>}
+            {authUser && <p>{authUser?.fullName?.split(" ")?.[0]}</p>}
             <div className="">
-              {authUser ? (
+              {authUser?.id ? (
                 <a
                   className="bg-[#f000b7] text-white px-4 py-3 rounded-md cursor-pointer duration-300"
                   onClick={handleLogout}

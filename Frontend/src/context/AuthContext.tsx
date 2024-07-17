@@ -1,8 +1,13 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 
+interface IAuthUser {
+  id: string;
+  emailId: string;
+  fullName: string;
+}
 interface AuthContextProps {
-  authUser: string;
-  handleAuthUser: (user: string) => void;
+  authUser: IAuthUser;
+  handleAuthUser: (user: IAuthUser) => void;
 }
 
 interface ChildrenProps {
@@ -10,14 +15,18 @@ interface ChildrenProps {
 }
 
 export const AuthContext = createContext<AuthContextProps>({
-  authUser: "",
+  authUser: { id: "", emailId: "", fullName: "" },
   handleAuthUser: () => {},
 });
 
 export const AuthContextProvider = ({ children }: ChildrenProps) => {
   const initialAuthUser = localStorage?.getItem("user");
-  const [authUser, setAuthUser] = useState<string>("");
-  const handleAuthUser = (user: string) => {
+  const [authUser, setAuthUser] = useState<IAuthUser>({
+    id: "",
+    emailId: "",
+    fullName: "",
+  });
+  const handleAuthUser = (user: IAuthUser) => {
     setAuthUser(user);
   };
 
