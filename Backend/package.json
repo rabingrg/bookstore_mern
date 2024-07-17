@@ -6,7 +6,10 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+    "frontend-install": "pnpm install --prefix ../Frontend",
+    "frontend-build": "pnpm build --prefix ../Frontend",
+    "build": "pnpm run frontend-install && pnpm run frontend-build && pnpm install"
   },
   "keywords": [],
   "author": "",
