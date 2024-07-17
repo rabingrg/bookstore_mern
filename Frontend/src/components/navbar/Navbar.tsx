@@ -20,7 +20,7 @@ const Navbar = () => {
   const [theme, setTheme] = useState<string | null>(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
   );
-  const dialog = document.getElementById("login_modal") as HTMLDialogElement;
+  const [dialog, setDialog] = useState<HTMLDialogElement>();
 
   const handleProtectedRoute = (menu: NavMenuType) => {
     if (!authUser?.id && menu?.id === 2) {
@@ -79,6 +79,10 @@ const Navbar = () => {
     return () => {
       window.removeEventListener("scroll", handlePageScroll);
     };
+  }, []);
+
+  useEffect(() => {
+    setDialog(document.getElementById("login_modal") as HTMLDialogElement);
   }, []);
 
   return (
