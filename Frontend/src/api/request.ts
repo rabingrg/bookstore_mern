@@ -20,16 +20,16 @@ interface BookResponseInterface {
 
 const user = {
   signup: (body: RegisterFields) => {
-    return axios.post(`${CONFIG.BASE_URI}user/signup`, body);
+    return axios.post(`${CONFIG.BASE_URI}/user/signup`, body);
   },
   login: (body: LoginFields) => {
-    return axios.post(`${CONFIG.BASE_URI}login/`, body);
+    return axios.post(`${CONFIG.BASE_URI}/login/`, body);
   },
 };
 
 const book = {
   getBooks: (): Promise<BookResponseInterface> => {
-    return axios.get(`${CONFIG.BASE_URI}book/getBooks`);
+    return axios.get(`${CONFIG.BASE_URI}/book/getBooks`);
   },
 };
 
