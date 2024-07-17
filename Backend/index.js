@@ -22,6 +22,11 @@ const app = express();
 
 app.use(cors()); //to fix cors issue //pnpm i cors
 app.use(express.json()); //to parse the request body data from client
+app.use(
+  cors({
+    origin: process.env.CLIENT_URI,
+  })
+);
 
 //defining routes
 app.use("/book", bookRoute);
@@ -43,13 +48,6 @@ try {
   console.log(error);
 }
 
-if (process.env.NODE_ENV === "production") {
-  const dirPath = path.resolve();
-  app.use(express.static("Frontend/dist"));
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(dirPath, "Frontend", "dist", "index.html"));
-  });
-}
 app.listen(PORT, () => {
   console.log(`Serving listening on port ${PORT}`);
 });
