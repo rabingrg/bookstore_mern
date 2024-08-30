@@ -22,11 +22,11 @@ const app = express();
 
 app.use(cors()); //to fix cors issue //pnpm i cors
 app.use(express.json()); //to parse the request body data from client
-app.use(
-  cors({
-    origin: process.env.CLIENT_URI,
-  })
-);
+// app.use(
+//   cors({
+//     origin: process.env.CLIENT_URI,
+//   })
+// );
 
 //defining routes
 app.use("/book", bookRoute);
