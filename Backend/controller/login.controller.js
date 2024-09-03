@@ -23,6 +23,26 @@ export const logIn = async (req, res) => {
         },
       });
     }
+
+    /************ Updated Code *************/
+
+    // if (!existingUser) {
+    //   return res.status(400).json({ message: "User does not exist!" });
+    // }
+    // const checkPassword = bcryptjs.compare(password, existingUser.password);
+    // if (!checkPassword) {
+    //   return res.status(400).json({ message: "Invalid credentials!" });
+    // }
+    // return res
+    //   .status(200)
+    //   .json({
+    //     data: {
+    //       id: existingUser._id,
+    //       emailId: existingUser.emailId,
+    //       fullName: existingUser.fullName,
+    //     },
+    //     message: "Login Successful",
+    //   });
   } catch (error) {
     console.log("Error in logging in: ", error.message);
     return res.status(500).json({ message: "Internal Server Error!" });
